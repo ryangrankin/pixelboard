@@ -86,12 +86,29 @@ export default function AdminPage() {
 
   if (!printWindow) return;
 
-  const letterMap: Record<string, string> = {
-    blank: "",
-    pink: "P",
-    yellow: "Y",
-    blue: "B",
-  };
+  const getPixelLetter = (pixel: string) => {
+  const value = pixel.toLowerCase().trim();
+
+  if (value.includes("pink")) return "P";
+  if (value.includes("yellow")) return "Y";
+  if (value.includes("blue")) return "B";
+
+  return "";
+};
+
+const pixels = design.grid_data
+  .flatMap((row) =>
+    row.map((pixel) => {
+      const letter = getPixelLetter(String(pixel));
+
+      return `
+        <div class="pixel">
+          ${letter}
+        </div>
+      `;
+    })
+  )
+  .join("");
 
   const pixels = design.grid_data
     .flatMap((row) =>
