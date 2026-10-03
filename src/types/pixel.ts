@@ -6,7 +6,7 @@ export type PixelColor =
 
 export type PixelGrid = PixelColor[][];
 
-export const BOARD_SIZE = 16;
+export const BOARD_SIZE = 24;
 
 export function createEmptyGrid(): PixelGrid {
   return Array.from({ length: BOARD_SIZE }, () =>

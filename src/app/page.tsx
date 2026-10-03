@@ -49,13 +49,10 @@ export default function Home() {
   };
 
   const handleSend = () => {
-    // This is temporary for the prototype.
-    // Eventually this function will send the grid
-    // data to the physical LED board.
+  // Temporary until database submission is connected.
+  console.log("Design submitted:", grid);
 
-    console.log("Design sent to board:", grid);
-
-    setMessage("Your design was sent to the board!");
+  setMessage("Your design was submitted for approval!");
   };
 
   return (
@@ -66,8 +63,8 @@ export default function Home() {
         <h1>Light Up Your Idea.</h1>
 
         <p className="subtitle">
-          Pick a color, create your pixel design, and send it
-          to the Spark Studios light board.
+          Pick a color and create your design for the
+          Spark Studios light board.
         </p>
       </header>
 
@@ -115,12 +112,12 @@ export default function Home() {
 
             <div>
               <h2>Ready?</h2>
-              <p>Send your creation to the Spark Studios board.</p>
+              <p>Submit your design for approval.</p>
             </div>
           </div>
 
           <button className="send-button" onClick={handleSend}>
-            Send to Board →
+            Submit Design →
           </button>
 
           {message && <p className="success-message">{message}</p>}
