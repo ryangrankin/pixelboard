@@ -178,23 +178,20 @@ main {
   display: grid;
 
   grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: repeat(24, 1fr);
 
   width: min(100%, 520px);
-
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1;
 
   margin: auto;
-
   padding: 8px;
 
   background: #182234;
-
   border-radius: 15px;
 
-  gap: 3px;
+  gap: 2px;
 
   user-select: none;
-
   touch-action: none;
 }
 
