@@ -82,17 +82,6 @@ export default function Home() {
   setStudentName("");
 };
 
-  const submission = {
-    designName,
-    studentName,
-    grid,
-    status: "pending",
-  };
-
-  console.log("Design submitted:", submission);
-
-  setMessage("Your design was submitted for approval!");
-};
 
   return (
     <main>
@@ -153,11 +142,11 @@ export default function Home() {
               <h2>Ready?</h2>
               <p>Submit your design for approval.</p>
             </div>
-          </div>
-
-          <button className="send-button" onClick={handleSend}>
+            <button className="send-button" onClick={handleSend}>
             Submit Design →
           </button>
+          </div>
+
 
           <div className="submission-form">
   <label>
