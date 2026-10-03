@@ -5,6 +5,7 @@ import { useState } from "react";
 import PixelBoard from "@/components/PixelBoard";
 import ColorPalette from "@/components/ColorPalette";
 import Toolbar from "@/components/Toolbar";
+import { createClient } from "@/utils/supabase/client";
 
 import {
   createEmptyGrid,
@@ -13,6 +14,7 @@ import {
 } from "@/types/pixel";
 
 export default function Home() {
+  const supabase = createClient();
   const [grid, setGrid] = useState<PixelGrid>(createEmptyGrid());
   const [selectedColor, setSelectedColor] =
     useState<PixelColor>("pink");
@@ -51,11 +53,34 @@ export default function Home() {
     setMessage("");
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
   if (!designName.trim() || !studentName.trim()) {
     setMessage("Please add a design name and your name or initials.");
     return;
   }
+
+  setMessage("Submitting...");
+
+  const { error } = await supabase
+    .from("designs")
+    .insert({
+      design_name: designName.trim(),
+      student_name: studentName.trim(),
+      grid_data: grid,
+      status: "pending",
+    });
+
+  if (error) {
+    console.error("Submission error:", error);
+    setMessage("Something went wrong. Please try again.");
+    return;
+  }
+
+  setMessage("Your design was submitted for approval!");
+
+  setDesignName("");
+  setStudentName("");
+};
 
   const submission = {
     designName,
