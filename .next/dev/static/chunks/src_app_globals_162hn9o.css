@@ -143,8 +143,9 @@ main {
   touch-action: none;
   background: #182234;
   border-radius: 15px;
-  grid-template-columns: repeat(16, 1fr);
-  gap: 3px;
+  grid-template-rows: repeat(24, 1fr);
+  grid-template-columns: repeat(24, 1fr);
+  gap: 2px;
   width: min(100%, 520px);
   margin: auto;
   padding: 8px;
@@ -152,12 +153,14 @@ main {
 }
 
 .pixel {
-  aspect-ratio: 1;
   cursor: crosshair;
   border: none;
-  border-radius: 3px;
+  border-radius: 2px;
   width: 100%;
+  min-width: 0;
   height: 100%;
+  min-height: 0;
+  padding: 0;
   transition: transform 80ms, background .1s;
 }
 
@@ -276,6 +279,35 @@ main {
   .toolbar {
     flex-wrap: wrap;
   }
+}
+
+.submission-form {
+  gap: 18px;
+  margin-bottom: 22px;
+  display: grid;
+}
+
+.submission-form label {
+  color: #444d5c;
+  gap: 7px;
+  font-size: .85rem;
+  font-weight: 700;
+  display: grid;
+}
+
+.submission-form input {
+  color: #182234;
+  background: #fff;
+  border: 1px solid #dce0e6;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  padding: 12px 14px;
+  font-size: .95rem;
+}
+
+.submission-form input:focus {
+  border-color: #182234;
 }
 
 /*# sourceMappingURL=src_app_globals_162hn9o.css.map*/
