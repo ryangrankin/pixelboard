@@ -85,6 +85,15 @@ export default function Home() {
 
   return (
     <main>
+      <nav className="site-nav">
+  <a href="/" className="nav-link active">
+    Create a Design
+  </a>
+
+  <a href="/gallery" className="nav-link">
+    Gallery
+  </a>
+</nav>
       <header className="hero">
         <p className="eyebrow">SPARK STUDIOS</p>
 
