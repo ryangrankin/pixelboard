@@ -23,6 +23,9 @@ export default function Home() {
 
   const [message, setMessage] = useState("");
 
+  const [designName, setDesignName] = useState("");
+  const [studentName, setStudentName] = useState("");
+
   const handleGridChange = (newGrid: PixelGrid) => {
     setHistory((previousHistory) => [...previousHistory, grid]);
     setGrid(newGrid);
@@ -49,11 +52,22 @@ export default function Home() {
   };
 
   const handleSend = () => {
-  // Temporary until database submission is connected.
-  console.log("Design submitted:", grid);
+  if (!designName.trim() || !studentName.trim()) {
+    setMessage("Please add a design name and your name or initials.");
+    return;
+  }
+
+  const submission = {
+    designName,
+    studentName,
+    grid,
+    status: "pending",
+  };
+
+  console.log("Design submitted:", submission);
 
   setMessage("Your design was submitted for approval!");
-  };
+};
 
   return (
     <main>
@@ -119,6 +133,30 @@ export default function Home() {
           <button className="send-button" onClick={handleSend}>
             Submit Design →
           </button>
+
+          <div className="submission-form">
+  <label>
+    Design name
+    <input
+      type="text"
+      value={designName}
+      onChange={(event) => setDesignName(event.target.value)}
+      placeholder="Give your design a name"
+      maxLength={50}
+    />
+  </label>
+
+  <label>
+    Your name or initials
+    <input
+      type="text"
+      value={studentName}
+      onChange={(event) => setStudentName(event.target.value)}
+      placeholder="First name or initials"
+      maxLength={30}
+    />
+  </label>
+</div>
 
           {message && <p className="success-message">{message}</p>}
         </div>
