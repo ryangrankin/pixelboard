@@ -408,13 +408,6 @@ main {
   font-weight: 700;
 }
 
-.site-nav {
-  justify-content: center;
-  gap: 24px;
-  padding: 24px 20px 0;
-  display: flex;
-}
-
 .site-nav a {
   color: #182234;
   font-weight: 700;
@@ -423,6 +416,31 @@ main {
 
 .site-nav a:hover {
   text-decoration: underline;
+}
+
+.site-nav {
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 20px 0;
+  display: flex;
+}
+
+.nav-link {
+  color: #182234;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .15s;
+}
+
+.nav-link:hover {
+  background: #1822340f;
+}
+
+.nav-link.active {
+  color: #fff;
+  background: #182234;
 }
 
 /*# sourceMappingURL=src_app_globals_162hn9o.css.map*/

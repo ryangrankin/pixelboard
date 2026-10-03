@@ -507,3 +507,28 @@ main {
 .site-nav a:hover {
   text-decoration: underline;
 }
+
+.site-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 20px 0;
+}
+
+.nav-link {
+  padding: 10px 16px;
+  border-radius: 10px;
+  color: #182234;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.nav-link:hover {
+  background: rgba(24, 34, 52, 0.06);
+}
+
+.nav-link.active {
+  background: #182234;
+  color: white;
+}
