@@ -57,100 +57,116 @@ function AdminPage() {
         // Remove it from the pending list
         setDesigns((currentDesigns)=>currentDesigns.filter((design)=>design.id !== id));
     };
-    // Print a clean 24x24 version of a design
     const printDesign = (design)=>{
         const printWindow = window.open("", "_blank");
         if (!printWindow) return;
-        const pixels = design.grid_data.flatMap((row)=>row.map((pixel)=>`<div class="pixel ${pixel}"></div>`)).join("");
+        const letterMap = {
+            blank: "",
+            pink: "P",
+            yellow: "Y",
+            blue: "B"
+        };
+        const pixels = design.grid_data.flatMap((row)=>row.map((pixel)=>{
+                const letter = letterMap[pixel] || "";
+                return `
+          <div class="pixel">
+            ${letter}
+          </div>
+        `;
+            })).join("");
         printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>${design.design_name}</title>
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>${design.design_name}</title>
 
-          <style>
-            * {
-              box-sizing: border-box;
-            }
+        <style>
+          * {
+            box-sizing: border-box;
+          }
 
+          body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            text-align: center;
+            color: #000;
+          }
+
+          h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+          }
+
+          .student {
+            margin: 0 0 12px;
+          }
+
+          .key {
+            margin-bottom: 20px;
+            font-weight: bold;
+          }
+
+          .board {
+            display: grid;
+            grid-template-columns: repeat(24, 1fr);
+            grid-template-rows: repeat(24, 1fr);
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+            border-top: 1px solid #000;
+            border-left: 1px solid #000;
+          }
+
+          .pixel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+
+            font-size: 14px;
+            font-weight: bold;
+          }
+
+          @media print {
             body {
-              font-family: Arial, sans-serif;
-              padding: 30px;
-              text-align: center;
-              color: #182234;
-            }
-
-            h1 {
-              margin: 0 0 6px;
-              font-size: 28px;
-            }
-
-            .student {
-              margin: 0 0 24px;
-              font-size: 16px;
+              padding: 0;
             }
 
             .board {
-              display: grid;
-              grid-template-columns: repeat(24, 1fr);
-              grid-template-rows: repeat(24, 1fr);
-              width: 600px;
-              height: 600px;
-              margin: 0 auto;
-              border: 2px solid #182234;
+              width: 6.5in;
+              height: 6.5in;
             }
+          }
+        </style>
+      </head>
 
-            .pixel {
-              border: 0.5px solid #aaa;
-            }
+      <body>
+        <h1>${design.design_name}</h1>
 
-            .blank {
-              background: white;
-            }
+        <p class="student">
+          Submitted by: ${design.student_name}
+        </p>
 
-            .pink {
-              background: #ff5c8a;
-            }
+        <p class="key">
+          P = Pink &nbsp;&nbsp; Y = Yellow &nbsp;&nbsp; B = Blue
+        </p>
 
-            .yellow {
-              background: #ffd84d;
-            }
+        <div class="board">
+          ${pixels}
+        </div>
 
-            .blue {
-              background: #4da6ff;
-            }
-
-            @media print {
-              body {
-                padding: 0;
-              }
-
-              .board {
-                width: 6.5in;
-                height: 6.5in;
-              }
-            }
-          </style>
-        </head>
-
-        <body>
-          <h1>${design.design_name}</h1>
-          <p class="student">
-            Submitted by: ${design.student_name}
-          </p>
-
-          <div class="board">
-            ${pixels}
-          </div>
-
-          <script>
-            window.onload = () => {
+        <script>
+          window.onload = () => {
+            setTimeout(() => {
               window.print();
-            };
-          </script>
-        </body>
-      </html>
-    `);
+            }, 250);
+          };
+        </script>
+      </body>
+    </html>
+  `);
         printWindow.document.close();
     };
     // Log admin out
@@ -165,12 +181,12 @@ function AdminPage() {
                 children: "Loading submissions..."
             }, void 0, false, {
                 fileName: "[project]/src/app/admin/page.tsx",
-                lineNumber: 203,
+                lineNumber: 219,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/admin/page.tsx",
-            lineNumber: 202,
+            lineNumber: 218,
             columnNumber: 7
         }, this);
     }
@@ -184,14 +200,14 @@ function AdminPage() {
                         children: "SPARK STUDIOS"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 211,
+                        lineNumber: 227,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                         children: "Design Approvals"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 213,
+                        lineNumber: 229,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -199,7 +215,7 @@ function AdminPage() {
                         children: "Review student designs before they appear in the gallery."
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 215,
+                        lineNumber: 231,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -209,13 +225,13 @@ function AdminPage() {
                         children: "Log Out"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 219,
+                        lineNumber: 235,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/page.tsx",
-                lineNumber: 210,
+                lineNumber: 226,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -225,14 +241,14 @@ function AdminPage() {
                         children: "Pending Designs"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 229,
+                        lineNumber: 245,
                         columnNumber: 9
                     }, this),
                     designs.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         children: "No designs are waiting for approval."
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 232,
+                        lineNumber: 248,
                         columnNumber: 11
                     }, this) : designs.map((design)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "approval-card",
@@ -243,7 +259,7 @@ function AdminPage() {
                                             children: design.design_name
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 237,
+                                            lineNumber: 253,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -253,13 +269,13 @@ function AdminPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 238,
+                                            lineNumber: 254,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/page.tsx",
-                                    lineNumber: 236,
+                                    lineNumber: 252,
                                     columnNumber: 15
                                 }, this),
                                 design.grid_data?.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -268,12 +284,12 @@ function AdminPage() {
                                                 className: `preview-pixel pixel-${pixel}`
                                             }, `${rowIndex}-${columnIndex}`, false, {
                                                 fileName: "[project]/src/app/admin/page.tsx",
-                                                lineNumber: 246,
+                                                lineNumber: 262,
                                                 columnNumber: 25
                                             }, this)))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.tsx",
-                                    lineNumber: 242,
+                                    lineNumber: 258,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -286,7 +302,7 @@ function AdminPage() {
                                             children: "Approve"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 256,
+                                            lineNumber: 272,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -296,7 +312,7 @@ function AdminPage() {
                                             children: "Reject"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 269,
+                                            lineNumber: 285,
                                             columnNumber: 17
                                         }, this),
                                         design.grid_data?.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -306,31 +322,31 @@ function AdminPage() {
                                             children: "Print Design"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 283,
+                                            lineNumber: 299,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/page.tsx",
-                                    lineNumber: 255,
+                                    lineNumber: 271,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, design.id, true, {
                             fileName: "[project]/src/app/admin/page.tsx",
-                            lineNumber: 235,
+                            lineNumber: 251,
                             columnNumber: 13
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/page.tsx",
-                lineNumber: 228,
+                lineNumber: 244,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/page.tsx",
-        lineNumber: 209,
+        lineNumber: 225,
         columnNumber: 5
     }, this);
 }

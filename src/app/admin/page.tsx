@@ -81,112 +81,128 @@ export default function AdminPage() {
     );
   };
 
-  // Print a clean 24x24 version of a design
-  const printDesign = (design: Design) => {
-    const printWindow = window.open("", "_blank");
+ const printDesign = (design: Design) => {
+  const printWindow = window.open("", "_blank");
 
-    if (!printWindow) return;
+  if (!printWindow) return;
 
-    const pixels = design.grid_data
-      .flatMap((row) =>
-        row.map(
-          (pixel) => `<div class="pixel ${pixel}"></div>`
-        )
-      )
-      .join("");
+  const letterMap: Record<string, string> = {
+    blank: "",
+    pink: "P",
+    yellow: "Y",
+    blue: "B",
+  };
 
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>${design.design_name}</title>
+  const pixels = design.grid_data
+    .flatMap((row) =>
+      row.map((pixel) => {
+        const letter = letterMap[pixel] || "";
 
-          <style>
-            * {
-              box-sizing: border-box;
-            }
+        return `
+          <div class="pixel">
+            ${letter}
+          </div>
+        `;
+      })
+    )
+    .join("");
 
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>${design.design_name}</title>
+
+        <style>
+          * {
+            box-sizing: border-box;
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            text-align: center;
+            color: #000;
+          }
+
+          h1 {
+            margin: 0 0 6px;
+            font-size: 28px;
+          }
+
+          .student {
+            margin: 0 0 12px;
+          }
+
+          .key {
+            margin-bottom: 20px;
+            font-weight: bold;
+          }
+
+          .board {
+            display: grid;
+            grid-template-columns: repeat(24, 1fr);
+            grid-template-rows: repeat(24, 1fr);
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+            border-top: 1px solid #000;
+            border-left: 1px solid #000;
+          }
+
+          .pixel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+
+            font-size: 14px;
+            font-weight: bold;
+          }
+
+          @media print {
             body {
-              font-family: Arial, sans-serif;
-              padding: 30px;
-              text-align: center;
-              color: #182234;
-            }
-
-            h1 {
-              margin: 0 0 6px;
-              font-size: 28px;
-            }
-
-            .student {
-              margin: 0 0 24px;
-              font-size: 16px;
+              padding: 0;
             }
 
             .board {
-              display: grid;
-              grid-template-columns: repeat(24, 1fr);
-              grid-template-rows: repeat(24, 1fr);
-              width: 600px;
-              height: 600px;
-              margin: 0 auto;
-              border: 2px solid #182234;
+              width: 6.5in;
+              height: 6.5in;
             }
+          }
+        </style>
+      </head>
 
-            .pixel {
-              border: 0.5px solid #aaa;
-            }
+      <body>
+        <h1>${design.design_name}</h1>
 
-            .blank {
-              background: white;
-            }
+        <p class="student">
+          Submitted by: ${design.student_name}
+        </p>
 
-            .pink {
-              background: #ff5c8a;
-            }
+        <p class="key">
+          P = Pink &nbsp;&nbsp; Y = Yellow &nbsp;&nbsp; B = Blue
+        </p>
 
-            .yellow {
-              background: #ffd84d;
-            }
+        <div class="board">
+          ${pixels}
+        </div>
 
-            .blue {
-              background: #4da6ff;
-            }
-
-            @media print {
-              body {
-                padding: 0;
-              }
-
-              .board {
-                width: 6.5in;
-                height: 6.5in;
-              }
-            }
-          </style>
-        </head>
-
-        <body>
-          <h1>${design.design_name}</h1>
-          <p class="student">
-            Submitted by: ${design.student_name}
-          </p>
-
-          <div class="board">
-            ${pixels}
-          </div>
-
-          <script>
-            window.onload = () => {
+        <script>
+          window.onload = () => {
+            setTimeout(() => {
               window.print();
-            };
-          </script>
-        </body>
-      </html>
-    `);
+            }, 250);
+          };
+        </script>
+      </body>
+    </html>
+  `);
 
-    printWindow.document.close();
-  };
+  printWindow.document.close();
+};
 
   // Log admin out
   const handleLogout = async () => {
