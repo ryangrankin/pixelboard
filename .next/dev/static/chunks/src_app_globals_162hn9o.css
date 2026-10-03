@@ -443,4 +443,18 @@ main {
   background: #182234;
 }
 
+.print-button {
+  color: #182234;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #182234;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 700;
+}
+
+.print-button:hover {
+  background: #f4f5f7;
+}
+
 /*# sourceMappingURL=src_app_globals_162hn9o.css.map*/
