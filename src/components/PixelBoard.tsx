@@ -37,19 +37,16 @@ export default function PixelBoard({
 
     setIsDrawing(true);
     paintPixel(rowIndex, columnIndex);
-
-    event.currentTarget.setPointerCapture(event.pointerId);
   }
 
   function handlePointerEnter(
-    rowIndex: number,
-    columnIndex: number,
-    event: React.PointerEvent<HTMLButtonElement>,
-  ) {
-    if (isDrawing && event.buttons === 1) {
-      paintPixel(rowIndex, columnIndex);
-    }
+  rowIndex: number,
+  columnIndex: number,
+) {
+  if (isDrawing) {
+    paintPixel(rowIndex, columnIndex);
   }
+}
 
   function stopDrawing() {
     setIsDrawing(false);
@@ -71,8 +68,8 @@ export default function PixelBoard({
             onPointerDown={(event) =>
               handlePointerDown(rowIndex, columnIndex, event)
             }
-            onPointerEnter={(event) =>
-              handlePointerEnter(rowIndex, columnIndex, event)
+            onPointerEnter={() =>
+              handlePointerEnter(rowIndex, columnIndex)
             }
           />
         )),
