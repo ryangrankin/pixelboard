@@ -85,15 +85,32 @@ export default function Home() {
 
   return (
     <main>
+      
       <nav className="site-nav">
-  <a href="/" className="nav-link active">
-    Create a Design
+  <a
+    href="https://sparkstudiosvt.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="spark-home-link"
+  >
+    <img
+      src="/sparklogo.jpg"
+      alt="Spark Studios"
+      className="spark-logo"
+    />
   </a>
 
-  <a href="/gallery" className="nav-link">
-    Gallery
-  </a>
+  <div className="nav-pages">
+    <a href="/" className="nav-link active">
+      Create a Design
+    </a>
+
+    <a href="/gallery" className="nav-link">
+      Gallery
+    </a>
+  </div>
 </nav>
+
       <header className="hero">
         <p className="eyebrow">SPARK STUDIOS</p>
 

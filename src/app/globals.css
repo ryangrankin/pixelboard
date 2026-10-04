@@ -65,28 +65,61 @@ main {
   background: #111111;
 }
 
-
 /* ========================================
    NAVIGATION
    ======================================== */
 
 .site-nav {
+  width: min(100%, 1100px);
+  margin: 0 auto 45px;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
 
-  gap: 8px;
-
-  margin: 0 auto 40px;
+  gap: 30px;
 }
 
-.nav-link,
-.site-nav a {
+.spark-home-link {
+  display: flex;
+  align-items: center;
+
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.spark-home-link:hover {
+  background: transparent;
+}
+
+.spark-logo {
+  display: block;
+
+  width: 115px;
+  height: auto;
+
+  object-fit: contain;
+
+  transition: transform 0.15s ease;
+}
+
+.spark-home-link:hover .spark-logo {
+  transform: scale(1.04);
+}
+
+.nav-pages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-link {
   padding: 10px 18px;
 
   border-radius: 10px;
 
-  color: var(--spark-white);
+  color: #ffffff;
 
   font-size: 0.9rem;
   font-weight: 700;
@@ -95,66 +128,16 @@ main {
 
   transition:
     background 0.15s ease,
-    color 0.15s ease,
-    transform 0.15s ease;
+    color 0.15s ease;
 }
 
-.nav-link:hover,
-.site-nav a:hover {
-  background: var(--spark-charcoal);
-
-  text-decoration: none;
+.nav-link:hover {
+  background: #292929;
 }
 
 .nav-link.active {
-  background: var(--spark-green);
-  color: var(--spark-black);
-}
-
-
-/* ========================================
-   HERO
-   ======================================== */
-
-.hero {
-  max-width: 750px;
-
-  margin: 0 auto 50px;
-
-  text-align: center;
-}
-
-.eyebrow {
-  margin-bottom: 12px;
-
-  color: var(--spark-green);
-
-  font-size: 0.8rem;
-  font-weight: 800;
-
-  letter-spacing: 0.2em;
-}
-
-.hero h1 {
-  margin-bottom: 22px;
-
-  color: var(--spark-white);
-
-  font-size: clamp(2.8rem, 8vw, 5.5rem);
-  line-height: 0.95;
-
-  letter-spacing: -0.05em;
-}
-
-.subtitle {
-  max-width: 580px;
-
-  margin: auto;
-
-  color: #c9c9c9;
-
-  font-size: 1.05rem;
-  line-height: 1.7;
+  background: #8dc63f;
+  color: #111111;
 }
 
 

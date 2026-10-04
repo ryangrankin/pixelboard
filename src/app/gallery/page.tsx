@@ -61,11 +61,11 @@ export default function GalleryPage() {
   </a>
 
   <div className="nav-pages">
-    <a href="/" className="nav-link active">
+    <a href="/" className="nav-link">
       Create a Design
     </a>
 
-    <a href="/gallery" className="nav-link">
+    <a href="/gallery" className="nav-link active">
       Gallery
     </a>
   </div>
