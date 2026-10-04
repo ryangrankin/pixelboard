@@ -10,8 +10,9 @@ type Design = {
   design_name: string;
   student_name: string;
   grid_data: PixelGrid;
-  status: string;
+  status: "pending" | "approved" | "rejected";
   created_at: string;
+  approved_at?: string | null;
 };
 
 export default function AdminPage() {
@@ -21,16 +22,16 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
 
   const pendingDesigns = designs.filter(
-  (design) => design.status === "pending"
-);
+    (design) => design.status === "pending"
+  );
 
-const pastDesigns = designs.filter(
-  (design) =>
-    design.status === "approved" ||
-    design.status === "rejected"
-);
+  const pastDesigns = designs.filter(
+    (design) =>
+      design.status === "approved" ||
+      design.status === "rejected"
+  );
 
-  // Load pending designs
+  // Load all submissions
   useEffect(() => {
     const loadDesigns = async () => {
       const supabase = createClient();
@@ -40,7 +41,6 @@ const pastDesigns = designs.filter(
         error: userError,
       } = await supabase.auth.getUser();
 
-      // Not logged in -> send to login page
       if (userError || !user) {
         router.replace("/admin/login");
         return;
@@ -54,7 +54,7 @@ const pastDesigns = designs.filter(
       if (error) {
         console.error("Error loading designs:", error);
       } else {
-        setDesigns(data || []);
+        setDesigns((data || []) as Design[]);
       }
 
       setLoading(false);
@@ -63,19 +63,21 @@ const pastDesigns = designs.filter(
     loadDesigns();
   }, [router]);
 
-  // Approve or reject a design
+  // Approve or reject
   const updateDesignStatus = async (
     id: number,
     status: "approved" | "rejected"
   ) => {
     const supabase = createClient();
 
+    const approvedAt =
+      status === "approved" ? new Date().toISOString() : null;
+
     const { error } = await supabase
       .from("designs")
       .update({
         status,
-        approved_at:
-          status === "approved" ? new Date().toISOString() : null,
+        approved_at: approvedAt,
       })
       .eq("id", id);
 
@@ -84,177 +86,173 @@ const pastDesigns = designs.filter(
       return;
     }
 
-    // Remove it from the pending list
+    // Keep the design in the admin archive instead of removing it
+    setDesigns((currentDesigns) =>
+      currentDesigns.map((design) =>
+        design.id === id
+          ? {
+              ...design,
+              status,
+              approved_at: approvedAt,
+            }
+          : design
+      )
+    );
+  };
+
+  // Delete a submission permanently
+  const deleteDesign = async (id: number) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to permanently delete this design?"
+    );
+
+    if (!confirmed) return;
+
+    const supabase = createClient();
+
+    const { error } = await supabase
+      .from("designs")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error deleting design:", error);
+      return;
+    }
+
     setDesigns((currentDesigns) =>
       currentDesigns.filter((design) => design.id !== id)
     );
   };
 
- const printDesign = (design: Design) => {
-  const printWindow = window.open("", "_blank");
+  // Print a 24x24 build sheet
+  const printDesign = (design: Design) => {
+    const printWindow = window.open("", "_blank");
 
-  if (!printWindow) return;
+    if (!printWindow) return;
 
-  const getPixelLetter = (pixel: string) => {
-  const value = pixel.toLowerCase().trim();
+    const getPixelLetter = (pixel: string) => {
+      const value = pixel.toLowerCase().trim();
 
-  if (value.includes("pink")) return "P";
-  if (value.includes("yellow")) return "Y";
-  if (value.includes("blue")) return "B";
+      if (value.includes("pink")) return "P";
+      if (value.includes("yellow")) return "Y";
+      if (value.includes("blue")) return "B";
 
-  return "";
-};
+      return "";
+    };
 
-const pixels = design.grid_data
-  .flatMap((row) =>
-    row.map((pixel) => {
-      const letter = getPixelLetter(String(pixel));
+    const pixels = design.grid_data
+      .flatMap((row) =>
+        row.map((pixel) => {
+          const letter = getPixelLetter(String(pixel));
 
-      return `
-        <div class="pixel">
-          ${letter}
-        </div>
-      `;
-    })
-  )
-  .join("");
+          return `
+            <div class="pixel">
+              ${letter}
+            </div>
+          `;
+        })
+      )
+      .join("");
 
-  const pixels = design.grid_data
-    .flatMap((row) =>
-      row.map((pixel) => {
-        const letter = letterMap[pixel] || "";
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${design.design_name}</title>
 
-        return `
-          <div class="pixel">
-            ${letter}
-          </div>
-        `;
-      })
-    )
-    .join("");
+          <style>
+            * {
+              box-sizing: border-box;
+            }
 
-    const deleteDesign = async (id: number) => {
-  const confirmed = window.confirm(
-    "Are you sure you want to permanently delete this design?"
-  );
-
-  if (!confirmed) return;
-
-  const supabase = createClient();
-
-  const { error } = await supabase
-    .from("designs")
-    .delete()
-    .eq("id", id);
-
-  if (error) {
-    console.error("Error deleting design:", error);
-    return;
-  }
-
-  setDesigns((currentDesigns) =>
-    currentDesigns.filter((design) => design.id !== id)
-  );
-};
-
-  printWindow.document.write(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>${design.design_name}</title>
-
-        <style>
-          * {
-            box-sizing: border-box;
-          }
-
-          body {
-            font-family: Arial, sans-serif;
-            padding: 30px;
-            text-align: center;
-            color: #000;
-          }
-
-          h1 {
-            margin: 0 0 6px;
-            font-size: 28px;
-          }
-
-          .student {
-            margin: 0 0 12px;
-          }
-
-          .key {
-            margin-bottom: 20px;
-            font-weight: bold;
-          }
-
-          .board {
-            display: grid;
-            grid-template-columns: repeat(24, 1fr);
-            grid-template-rows: repeat(24, 1fr);
-            width: 600px;
-            height: 600px;
-            margin: 0 auto;
-            border-top: 1px solid #000;
-            border-left: 1px solid #000;
-          }
-
-          .pixel {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-right: 1px solid #000;
-            border-bottom: 1px solid #000;
-
-            font-size: 14px;
-            font-weight: bold;
-          }
-
-          @media print {
             body {
-              padding: 0;
+              font-family: Arial, sans-serif;
+              padding: 30px;
+              text-align: center;
+              color: #000;
+            }
+
+            h1 {
+              margin: 0 0 6px;
+              font-size: 28px;
+            }
+
+            .student {
+              margin: 0 0 12px;
+            }
+
+            .key {
+              margin-bottom: 20px;
+              font-weight: bold;
             }
 
             .board {
-              width: 6.5in;
-              height: 6.5in;
+              display: grid;
+              grid-template-columns: repeat(24, 1fr);
+              grid-template-rows: repeat(24, 1fr);
+              width: 600px;
+              height: 600px;
+              margin: 0 auto;
+              border-top: 1px solid #000;
+              border-left: 1px solid #000;
             }
-          }
-        </style>
-      </head>
 
-      <body>
-        <h1>${design.design_name}</h1>
+            .pixel {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-right: 1px solid #000;
+              border-bottom: 1px solid #000;
+              font-size: 14px;
+              font-weight: bold;
+            }
 
-        <p class="student">
-          Submitted by: ${design.student_name}
-        </p>
+            @media print {
+              body {
+                padding: 0;
+              }
 
-        <p class="key">
-          P = Pink &nbsp;&nbsp; Y = Yellow &nbsp;&nbsp; B = Blue
-        </p>
+              .board {
+                width: 6.5in;
+                height: 6.5in;
+              }
+            }
+          </style>
+        </head>
 
-        <div class="board">
-          ${pixels}
-        </div>
+        <body>
+          <h1>${design.design_name}</h1>
 
-        <script>
-          window.onload = () => {
-            setTimeout(() => {
-              window.print();
-            }, 250);
-          };
-        </script>
-      </body>
-    </html>
-  `);
+          <p class="student">
+            Submitted by: ${design.student_name}
+          </p>
 
-  printWindow.document.close();
-};
+          <p class="key">
+            P = Pink &nbsp;&nbsp;
+            Y = Yellow &nbsp;&nbsp;
+            B = Blue
+          </p>
 
-  // Log admin out
+          <div class="board">
+            ${pixels}
+          </div>
+
+          <script>
+            window.onload = () => {
+              setTimeout(() => {
+                window.print();
+              }, 250);
+            };
+          </script>
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+  };
+
+  // Log out
   const handleLogout = async () => {
     const supabase = createClient();
 
@@ -276,10 +274,10 @@ const pixels = design.grid_data
       <header className="hero">
         <p className="eyebrow">SPARK STUDIOS</p>
 
-        <h1>Design Approvals</h1>
+        <h1>Design Admin</h1>
 
         <p className="subtitle">
-          Review student designs before they appear in the gallery.
+          Review, print, and manage student designs.
         </p>
 
         <button
@@ -294,10 +292,10 @@ const pixels = design.grid_data
       <section className="designer">
         <h2>Pending Designs</h2>
 
-        {designs.length === 0 ? (
+        {pendingDesigns.length === 0 ? (
           <p>No designs are waiting for approval.</p>
         ) : (
-          designs.map((design) => (
+          pendingDesigns.map((design) => (
             <div className="approval-card" key={design.id}>
               <div>
                 <h3>{design.design_name}</h3>
@@ -354,6 +352,67 @@ const pixels = design.grid_data
                     Print Design
                   </button>
                 )}
+              </div>
+            </div>
+          ))
+        )}
+      </section>
+
+      <section className="designer past-submissions">
+        <h2>Past Submissions</h2>
+
+        {pastDesigns.length === 0 ? (
+          <p>No past submissions yet.</p>
+        ) : (
+          pastDesigns.map((design) => (
+            <div className="approval-card" key={design.id}>
+              <div>
+                <h3>{design.design_name}</h3>
+
+                <p>Submitted by: {design.student_name}</p>
+
+                <p>
+                  Status:{" "}
+                  <strong>
+                    {design.status === "approved"
+                      ? "Approved"
+                      : "Rejected"}
+                  </strong>
+                </p>
+              </div>
+
+              {design.grid_data?.length > 0 && (
+                <div className="design-preview">
+                  {design.grid_data.flatMap(
+                    (row, rowIndex) =>
+                      row.map((pixel, columnIndex) => (
+                        <div
+                          key={`${rowIndex}-${columnIndex}`}
+                          className={`preview-pixel pixel-${pixel}`}
+                        />
+                      ))
+                  )}
+                </div>
+              )}
+
+              <div className="approval-actions">
+                {design.grid_data?.length > 0 && (
+                  <button
+                    type="button"
+                    className="print-button"
+                    onClick={() => printDesign(design)}
+                  >
+                    Print Design
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  className="delete-button"
+                  onClick={() => deleteDesign(design.id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))
