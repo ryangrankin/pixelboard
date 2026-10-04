@@ -6,6 +6,7 @@
 }
 
 html, body {
+  background: #111;
   min-height: 100%;
 }
 
@@ -22,8 +23,9 @@ html, body {
 }
 
 body {
-  background: var(--spark-off-white);
-  color: var(--spark-black);
+  color: #111;
+  background: #111;
+  min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -40,7 +42,7 @@ a {
 }
 
 main {
-  background: var(--spark-black);
+  background: #111;
   width: 100%;
   min-height: 100vh;
   padding: 40px 20px 100px;
@@ -498,7 +500,7 @@ main {
 
 @media (max-width: 600px) {
   main {
-    background: var(--spark-black);
+    background: #111;
     padding: 25px 12px 70px;
   }
 

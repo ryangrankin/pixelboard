@@ -11,6 +11,7 @@
 html,
 body {
   min-height: 100%;
+  background: #111111;
 }
 
 :root {
@@ -29,8 +30,10 @@ body {
 }
 
 body {
-  background: var(--spark-off-white);
-  color: var(--spark-black);
+  min-height: 100vh;
+
+  background: #111111;
+  color: #111111;
 
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -59,7 +62,7 @@ main {
 
   padding: 40px 20px 100px;
 
-  background: var(--spark-black);
+  background: #111111;
 }
 
 
@@ -766,7 +769,7 @@ main {
 @media (max-width: 600px) {
   main {
     padding: 25px 12px 70px;
-    background : var(--spark-black);
+    background: #111111;
   }
 
   .site-nav {
