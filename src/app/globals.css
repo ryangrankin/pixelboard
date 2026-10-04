@@ -1,3 +1,7 @@
+/* ========================================
+   RESET
+   ======================================== */
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -9,76 +13,181 @@ body {
   min-height: 100%;
 }
 
-body {
-  background:
-    radial-gradient(circle at 10% 10%, #fff2b8 0, transparent 25%),
-    radial-gradient(circle at 90% 20%, #dbeeff 0, transparent 25%),
-    #fffdf7;
+:root {
+  --spark-green: #8dc63f;
+  --spark-green-dark: #75a932;
 
-  color: #182234;
+  --spark-black: #111111;
+  --spark-charcoal: #292929;
+
+  --spark-gray: #666666;
+  --spark-mid-gray: #cccccc;
+  --spark-light-gray: #eeeeee;
+  --spark-off-white: #f7f7f7;
+
+  --spark-white: #ffffff;
+}
+
+body {
+  background: var(--spark-off-white);
+  color: var(--spark-black);
 
   font-family: Arial, Helvetica, sans-serif;
 }
 
-button {
+button,
+input {
   font: inherit;
 }
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+
+/* ========================================
+   MAIN PAGE
+   ======================================== */
 
 main {
   width: 100%;
   min-height: 100vh;
-  padding: 70px 20px 100px;
+
+  padding: 40px 20px 100px;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--spark-black) 0,
+      var(--spark-black) 330px,
+      var(--spark-off-white) 330px
+    );
 }
+
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+
+.site-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 0 auto 40px;
+}
+
+.nav-link,
+.site-nav a {
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  color: var(--spark-white);
+
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.nav-link:hover,
+.site-nav a:hover {
+  background: var(--spark-charcoal);
+
+  text-decoration: none;
+}
+
+.nav-link.active {
+  background: var(--spark-green);
+  color: var(--spark-black);
+}
+
+
+/* ========================================
+   HERO
+   ======================================== */
 
 .hero {
   max-width: 750px;
-  margin: 0 auto 55px;
+
+  margin: 0 auto 50px;
+
   text-align: center;
 }
 
 .eyebrow {
   margin-bottom: 12px;
 
+  color: var(--spark-green);
+
   font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.2em;
 
-  color: #4264d8;
+  letter-spacing: 0.2em;
 }
 
 .hero h1 {
+  margin-bottom: 22px;
+
+  color: var(--spark-white);
+
   font-size: clamp(2.8rem, 8vw, 5.5rem);
   line-height: 0.95;
-  letter-spacing: -0.05em;
 
-  margin-bottom: 22px;
+  letter-spacing: -0.05em;
 }
 
 .subtitle {
   max-width: 580px;
+
   margin: auto;
 
-  color: #657083;
+  color: #c9c9c9;
 
   font-size: 1.05rem;
   line-height: 1.7;
 }
 
+
+/* ========================================
+   MAIN DESIGNER / CONTENT CARD
+   ======================================== */
+
 .designer {
   width: min(100%, 650px);
 
   margin: auto;
-
-  background: rgba(255, 255, 255, 0.88);
-
-  border: 1px solid #e8e8e8;
-  border-radius: 30px;
-
   padding: 35px;
 
+  background: var(--spark-white);
+
+  border: 1px solid #dddddd;
+  border-radius: 24px;
+
   box-shadow:
-    0 30px 80px rgba(30, 40, 70, 0.08);
+    0 18px 45px rgba(0, 0, 0, 0.12);
 }
+
+.designer + .designer {
+  margin-top: 32px;
+}
+
+
+/* ========================================
+   INSTRUCTIONS
+   ======================================== */
 
 .instructions {
   display: flex;
@@ -90,13 +199,17 @@ main {
 }
 
 .instructions h2 {
-  font-size: 1.1rem;
   margin-bottom: 4px;
+
+  color: var(--spark-black);
+
+  font-size: 1.1rem;
 }
 
 .instructions p {
+  color: var(--spark-gray);
+
   font-size: 0.9rem;
-  color: #788293;
 }
 
 .step-number {
@@ -111,11 +224,16 @@ main {
 
   border-radius: 50%;
 
-  background: #182234;
-  color: white;
+  background: var(--spark-green);
+  color: var(--spark-black);
 
   font-weight: 800;
 }
+
+
+/* ========================================
+   COLOR PALETTE
+   ======================================== */
 
 .palette {
   display: flex;
@@ -135,14 +253,13 @@ main {
 
   gap: 9px;
 
+  padding: 10px 18px;
+
   border: 2px solid transparent;
   border-radius: 100px;
 
-  padding: 10px 18px;
-
-  background: #f4f5f7;
-
-  color: #444d5c;
+  background: var(--spark-light-gray);
+  color: var(--spark-black);
 
   cursor: pointer;
 
@@ -157,18 +274,25 @@ main {
 }
 
 .color-button.selected {
-  background: white;
-  border-color: #182234;
+  background: var(--spark-white);
+
+  border-color: var(--spark-black);
 }
 
 .color-circle {
   width: 20px;
   height: 20px;
 
-  border-radius: 50%;
-
   border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
 }
+
+
+/* ========================================
+   PIXEL BOARD
+
+   KEEP THESE COLORS UNCHANGED
+   ======================================== */
 
 .board-instructions {
   margin-bottom: 18px;
@@ -181,15 +305,17 @@ main {
   grid-template-rows: repeat(24, 1fr);
 
   width: min(100%, 520px);
+
   aspect-ratio: 1 / 1;
 
   margin: auto;
   padding: 8px;
 
-  background: #182234;
-  border-radius: 15px;
-
   gap: 2px;
+
+  background: #182234;
+
+  border-radius: 15px;
 
   user-select: none;
   touch-action: none;
@@ -198,10 +324,12 @@ main {
 .pixel {
   width: 100%;
   height: 100%;
+
   min-width: 0;
   min-height: 0;
 
   padding: 0;
+
   border: none;
   border-radius: 2px;
 
@@ -223,20 +351,28 @@ main {
 .pixel-pink {
   background: #ff5c8a;
 
-  box-shadow: 0 0 8px rgba(255, 92, 138, 0.6);
+  box-shadow:
+    0 0 8px rgba(255, 92, 138, 0.6);
 }
 
 .pixel-yellow {
   background: #ffd84d;
 
-  box-shadow: 0 0 8px rgba(255, 216, 77, 0.6);
+  box-shadow:
+    0 0 8px rgba(255, 216, 77, 0.6);
 }
 
 .pixel-blue {
   background: #4da6ff;
 
-  box-shadow: 0 0 8px rgba(77, 166, 255, 0.6);
+  box-shadow:
+    0 0 8px rgba(77, 166, 255, 0.6);
 }
+
+
+/* ========================================
+   TOOLBAR
+   ======================================== */
 
 .toolbar {
   display: flex;
@@ -248,86 +384,431 @@ main {
 }
 
 .toolbar button {
-  border: 1px solid #dce0e6;
-
-  background: white;
-
-  border-radius: 100px;
-
   padding: 10px 18px;
 
-  color: #4b5565;
+  background: var(--spark-white);
+  color: var(--spark-black);
 
-  cursor: pointer;
+  border: 1px solid var(--spark-mid-gray);
+  border-radius: 100px;
 
-  transition: 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .toolbar button:hover {
-  border-color: #182234;
-  color: #182234;
+  border-color: var(--spark-green);
+
+  transform: translateY(-1px);
 }
 
 .toolbar .active-tool {
-  background: #182234;
-  color: white;
-  border-color: #182234;
+  background: var(--spark-black);
+  color: var(--spark-white);
+
+  border-color: var(--spark-black);
 }
+
+
+/* ========================================
+   SUBMISSION SECTION
+   ======================================== */
 
 .send-section {
-  border-top: 1px solid #e7e9ed;
-
   margin-top: 35px;
   padding-top: 30px;
+
+  border-top: 1px solid #e2e2e2;
 }
+
+.submission-form {
+  display: grid;
+
+  gap: 18px;
+
+  margin-bottom: 22px;
+}
+
+.submission-form label {
+  display: grid;
+
+  gap: 7px;
+
+  color: var(--spark-black);
+
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.submission-form input {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  background: var(--spark-white);
+  color: var(--spark-black);
+
+  border: 1px solid var(--spark-mid-gray);
+  border-radius: 10px;
+
+  font-size: 0.95rem;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.submission-form input:focus {
+  border-color: var(--spark-green);
+
+  box-shadow:
+    0 0 0 3px rgba(141, 198, 63, 0.18);
+}
+
+
+/* ========================================
+   SUBMIT BUTTON
+   ======================================== */
 
 .send-button {
   width: 100%;
 
+  padding: 18px;
+
+  background: var(--spark-green);
+  color: var(--spark-black);
+
   border: none;
   border-radius: 15px;
 
-  padding: 18px;
+  font-size: 1rem;
+  font-weight: 800;
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.send-button:hover {
+  background: var(--spark-green-dark);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.16);
+}
+
+.success-message {
+  margin-top: 15px;
+
+  color: var(--spark-green-dark);
+
+  text-align: center;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+
+/* ========================================
+   ADMIN
+   ======================================== */
+
+.logout-button {
+  margin-top: 20px;
+  padding: 10px 18px;
+
+  background: transparent;
+  color: var(--spark-white);
+
+  border: 1px solid var(--spark-green);
+  border-radius: 8px;
+
+  font-weight: 700;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.logout-button:hover {
+  background: var(--spark-green);
+  color: var(--spark-black);
+}
+
+.approval-card {
+  padding: 26px 0;
+
+  border-bottom: 1px solid #dddddd;
+}
+
+.approval-card:last-child {
+  border-bottom: none;
+}
+
+.approval-card h3 {
+  margin-bottom: 5px;
+
+  color: var(--spark-black);
+
+  font-size: 1.2rem;
+}
+
+.approval-card p {
+  margin-top: 4px;
+
+  color: var(--spark-gray);
+
+  font-size: 0.9rem;
+}
+
+.approval-actions {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+
+/* ========================================
+   ADMIN DESIGN PREVIEW
+
+   KEEP PIXEL COLORS THE SAME
+   ======================================== */
+
+.design-preview {
+  display: grid;
+
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: repeat(24, 1fr);
+
+  width: 240px;
+  height: 240px;
+
+  margin: 18px 0;
+  padding: 4px;
+
+  gap: 1px;
 
   background: #182234;
-  color: white;
 
-  font-weight: 800;
-  font-size: 1rem;
+  border-radius: 8px;
+}
 
-  cursor: pointer;
+.preview-pixel {
+  min-width: 0;
+  min-height: 0;
+
+  border-radius: 1px;
+}
+
+
+/* ========================================
+   ADMIN BUTTONS
+   ======================================== */
+
+.approve-button,
+.reject-button,
+.print-button,
+.delete-button {
+  padding: 10px 18px;
+
+  border-radius: 8px;
+
+  font-weight: 700;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.approve-button:hover,
+.reject-button:hover,
+.print-button:hover,
+.delete-button:hover {
+  transform: translateY(-1px);
+}
+
+.approve-button {
+  background: var(--spark-green);
+  color: var(--spark-black);
+
+  border: 1px solid var(--spark-green);
+}
+
+.approve-button:hover {
+  background: var(--spark-green-dark);
+  border-color: var(--spark-green-dark);
+}
+
+.reject-button {
+  background: var(--spark-white);
+  color: var(--spark-black);
+
+  border: 1px solid var(--spark-mid-gray);
+}
+
+.reject-button:hover {
+  background: var(--spark-light-gray);
+  border-color: var(--spark-black);
+}
+
+.print-button {
+  background: var(--spark-white);
+  color: var(--spark-black);
+
+  border: 1px solid var(--spark-black);
+}
+
+.print-button:hover {
+  background: var(--spark-light-gray);
+}
+
+.delete-button {
+  background: var(--spark-black);
+  color: var(--spark-white);
+
+  border: 1px solid var(--spark-black);
+}
+
+.delete-button:hover {
+  background: var(--spark-charcoal);
+}
+
+
+/* ========================================
+   PAST SUBMISSIONS
+   ======================================== */
+
+.past-submissions {
+  margin-top: 32px;
+}
+
+
+/* ========================================
+   GALLERY
+   ======================================== */
+
+.gallery-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(240px, 1fr));
+
+  gap: 28px;
+
+  margin-top: 25px;
+}
+
+.gallery-card {
+  padding: 20px;
+
+  background: var(--spark-white);
+
+  border: 1px solid #dddddd;
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.08);
 
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease;
 }
 
-.send-button:hover {
-  transform: translateY(-2px);
+.gallery-card:hover {
+  transform: translateY(-3px);
 
   box-shadow:
-    0 10px 25px rgba(24, 34, 52, 0.2);
+    0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
-.success-message {
-  margin-top: 15px;
+.gallery-card h2 {
+  margin-top: 14px;
 
-  text-align: center;
+  color: var(--spark-black);
 
-  font-size: 0.9rem;
-  font-weight: 700;
-
-  color: #26845b;
+  font-size: 1.1rem;
 }
+
+.gallery-preview {
+  display: grid;
+
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: repeat(24, 1fr);
+
+  width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  padding: 5px;
+
+  gap: 1px;
+
+  background: #182234;
+
+  border-radius: 10px;
+}
+
+.gallery-preview .preview-pixel {
+  min-width: 0;
+  min-height: 0;
+}
+
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
 
 @media (max-width: 600px) {
   main {
-    padding: 40px 12px 70px;
+    padding: 25px 12px 70px;
+
+    background:
+      linear-gradient(
+        180deg,
+        var(--spark-black) 0,
+        var(--spark-black) 290px,
+        var(--spark-off-white) 290px
+      );
+  }
+
+  .site-nav {
+    margin-bottom: 32px;
+  }
+
+  .nav-link,
+  .site-nav a {
+    padding: 9px 13px;
+
+    font-size: 0.85rem;
+  }
+
+  .hero {
+    margin-bottom: 40px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 13vw, 4rem);
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
   }
 
   .designer {
     padding: 22px 14px;
-    border-radius: 22px;
+
+    border-radius: 18px;
   }
 
   .palette {
@@ -347,419 +828,32 @@ main {
   }
 
   .pixel-board {
-    gap: 2px;
     padding: 6px;
+
+    gap: 2px;
   }
 
   .toolbar {
     flex-wrap: wrap;
   }
-}
 
-.submission-form {
-  display: grid;
-  gap: 18px;
-  margin-bottom: 22px;
-}
+  .approval-actions {
+    flex-direction: column;
+  }
 
-.submission-form label {
-  display: grid;
-  gap: 7px;
+  .approval-actions button {
+    width: 100%;
+  }
 
-  font-size: 0.85rem;
-  font-weight: 700;
+  .design-preview {
+    width: min(100%, 240px);
 
-  color: #444d5c;
-}
+    aspect-ratio: 1 / 1;
 
-.submission-form input {
-  width: 100%;
+    height: auto;
+  }
 
-  padding: 12px 14px;
-
-  border: 1px solid #dce0e6;
-  border-radius: 10px;
-
-  background: white;
-  color: #182234;
-
-  font-size: 0.95rem;
-
-  outline: none;
-}
-
-.submission-form input:focus {
-  border-color: #182234;
-}
-
-.approval-card {
-  padding: 24px 0;
-  border-bottom: 1px solid #dce0e6;
-}
-
-.approval-card:last-child {
-  border-bottom: none;
-}
-
-.design-preview {
-  display: grid;
-  grid-template-columns: repeat(24, 1fr);
-  grid-template-rows: repeat(24, 1fr);
-  width: 240px;
-  height: 240px;
-  margin: 18px 0;
-  padding: 4px;
-  gap: 1px;
-  background: #182234;
-  border-radius: 8px;
-}
-
-.preview-pixel {
-  min-width: 0;
-  min-height: 0;
-  border-radius: 1px;
-}
-
-.approval-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.approve-button,
-.reject-button {
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.approve-button {
-  border: none;
-  background: #182234;
-  color: white;
-}
-
-.reject-button {
-  border: 1px solid #dce0e6;
-  background: white;
-  color: #182234;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 28px;
-}
-
-.gallery-card {
-  padding: 20px;
-  background: white;
-  border: 1px solid #dce0e6;
-  border-radius: 16px;
-}
-
-.gallery-card h2 {
-  margin-top: 14px;
-  font-size: 1.1rem;
-}
-
-.gallery-preview {
-  display: grid;
-  grid-template-columns: repeat(24, 1fr);
-  grid-template-rows: repeat(24, 1fr);
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  padding: 5px;
-  gap: 1px;
-  background: #182234;
-  border-radius: 10px;
-}
-
-.gallery-preview .preview-pixel {
-  min-width: 0;
-  min-height: 0;
-}
-
-.logout-button {
-  margin-top: 20px;
-  padding: 9px 16px;
-  border: 1px solid #182234;
-  border-radius: 8px;
-  background: transparent;
-  color: #182234;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.site-nav {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  padding: 24px 20px 0;
-}
-
-.site-nav a {
-  color: #182234;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.site-nav a:hover {
-  text-decoration: underline;
-}
-
-.site-nav {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 24px 20px 0;
-}
-
-.nav-link {
-  padding: 10px 16px;
-  border-radius: 10px;
-  color: #182234;
-  font-weight: 700;
-  text-decoration: none;
-  transition: background 0.15s ease;
-}
-
-.nav-link:hover {
-  background: rgba(24, 34, 52, 0.06);
-}
-
-.nav-link.active {
-  background: #182234;
-  color: white;
-}
-
-.print-button {
-  padding: 10px 18px;
-  border: 1px solid #182234;
-  border-radius: 8px;
-  background: white;
-  color: #182234;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.print-button:hover {
-  background: #f4f5f7;
-}
-
-.delete-button {
-  padding: 10px 18px;
-  border: 1px solid #b42318;
-  border-radius: 8px;
-  background: white;
-  color: #b42318;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  background: #fff1f0;
-}
-
-.past-submissions {
-  margin-top: 32px;
-}
-
-/* ========================================
-   SPARK STUDIOS THEME
-   Green / Black / Gray / White
-   ======================================== */
-
-:root {
-  --spark-green: #8dc63f;
-  --spark-black: #111111;
-  --spark-dark-gray: #3f3f3f;
-  --spark-gray: #6b6b6b;
-  --spark-light-gray: #f2f2f2;
-  --spark-white: #ffffff;
-}
-
-/* ---------- PAGE ---------- */
-
-body {
-  background: var(--spark-white);
-  color: var(--spark-black);
-}
-
-/* ---------- HERO ---------- */
-
-.hero {
-  background: var(--spark-white);
-}
-
-.eyebrow {
-  color: var(--spark-green);
-}
-
-.hero h1 {
-  color: var(--spark-black);
-}
-
-.subtitle {
-  color: var(--spark-gray);
-}
-
-/* ---------- MAIN CONTENT CARDS ---------- */
-
-.designer {
-  background: var(--spark-white);
-  border: 1px solid #dddddd;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-.instructions h2,
-.designer h2,
-.approval-card h3,
-.gallery-card h2 {
-  color: var(--spark-black);
-}
-
-.instructions p,
-.approval-card p {
-  color: var(--spark-gray);
-}
-
-/* ---------- STEP NUMBERS ---------- */
-
-.step-number {
-  background: var(--spark-green);
-  color: var(--spark-black);
-}
-
-/* ---------- NAVIGATION ---------- */
-
-.site-nav {
-  background: var(--spark-white);
-}
-
-.nav-link {
-  color: var(--spark-black);
-}
-
-.nav-link:hover {
-  background: var(--spark-light-gray);
-}
-
-.nav-link.active {
-  background: var(--spark-green);
-  color: var(--spark-black);
-}
-
-/* ---------- FORM INPUTS ---------- */
-
-.submission-form label {
-  color: var(--spark-black);
-}
-
-.submission-form input {
-  background: var(--spark-white);
-  color: var(--spark-black);
-  border: 1px solid #cccccc;
-}
-
-.submission-form input:focus {
-  border-color: var(--spark-green);
-  outline: 2px solid rgba(141, 198, 63, 0.2);
-}
-
-/* ---------- PRIMARY BUTTON ---------- */
-
-.send-button {
-  background: var(--spark-green);
-  color: var(--spark-black);
-  border: none;
-}
-
-.send-button:hover {
-  filter: brightness(0.94);
-}
-
-/* ---------- ADMIN ---------- */
-
-.logout-button {
-  border: 1px solid var(--spark-black);
-  background: var(--spark-white);
-  color: var(--spark-black);
-}
-
-.logout-button:hover {
-  background: var(--spark-light-gray);
-}
-
-.approval-card {
-  border-bottom: 1px solid #dddddd;
-}
-
-.approve-button {
-  background: var(--spark-green);
-  color: var(--spark-black);
-  border: none;
-}
-
-.approve-button:hover {
-  filter: brightness(0.94);
-}
-
-.reject-button,
-.print-button {
-  background: var(--spark-white);
-  color: var(--spark-black);
-  border: 1px solid var(--spark-black);
-}
-
-.reject-button:hover,
-.print-button:hover {
-  background: var(--spark-light-gray);
-}
-
-/* Keep delete visually distinct */
-
-.delete-button {
-  background: var(--spark-white);
-  color: var(--spark-black);
-  border: 1px solid var(--spark-black);
-}
-
-.delete-button:hover {
-  background: var(--spark-black);
-  color: var(--spark-white);
-}
-
-/* ---------- GALLERY ---------- */
-
-.gallery-card {
-  background: var(--spark-white);
-  border: 1px solid #dddddd;
-}
-
-/* ========================================
-   IMPORTANT:
-   PIXEL BOARD COLORS STAY UNCHANGED
-   ======================================== */
-
-.pixel-board,
-.design-preview,
-.gallery-preview {
-  background: #182234;
-}
-
-.pixel-blank {
-  background: #263247;
-}
-
-.pixel-pink {
-  background: #ff5c8a;
-}
-
-.pixel-yellow {
-  background: #ffd84d;
-}
-
-.pixel-blue {
-  background: #4da6ff;
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
 }
