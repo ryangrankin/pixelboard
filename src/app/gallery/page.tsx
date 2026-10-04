@@ -46,9 +46,29 @@ export default function GalleryPage() {
         </p>
       </header>
 
-      <nav className="site-nav">
-  <a href="/">Create a Design</a>
-  <a href="/gallery">Gallery</a>
+     <nav className="site-nav">
+  <a
+    href="https://sparkstudiosvt.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="spark-home-link"
+  >
+    <img
+      src="/sparklogo.jpg"
+      alt="Spark Studios"
+      className="spark-logo"
+    />
+  </a>
+
+  <div className="nav-pages">
+    <a href="/" className="nav-link active">
+      Create a Design
+    </a>
+
+    <a href="/gallery" className="nav-link">
+      Gallery
+    </a>
+  </div>
 </nav>
 
       <section className="designer">
