@@ -59,13 +59,7 @@ main {
 
   padding: 40px 20px 100px;
 
-  background:
-    linear-gradient(
-      180deg,
-      var(--spark-black) 0,
-      var(--spark-black) 330px,
-      var(--spark-off-white) 330px
-    );
+  background: var(--spark-black);
 }
 
 
@@ -173,11 +167,11 @@ main {
 
   background: var(--spark-white);
 
-  border: 1px solid #dddddd;
+  border: 3px solid var(--spark-green);
   border-radius: 24px;
 
   box-shadow:
-    0 18px 45px rgba(0, 0, 0, 0.12);
+    0 18px 45px rgba(0, 0, 0, 0.3);
 }
 
 .designer + .designer {
@@ -772,14 +766,7 @@ main {
 @media (max-width: 600px) {
   main {
     padding: 25px 12px 70px;
-
-    background:
-      linear-gradient(
-        180deg,
-        var(--spark-black) 0,
-        var(--spark-black) 290px,
-        var(--spark-off-white) 290px
-      );
+    background : var(--spark-black);
   }
 
   .site-nav {
