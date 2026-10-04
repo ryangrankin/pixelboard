@@ -42,7 +42,7 @@ export default function GalleryPage() {
         <p className="eyebrow">SPARK STUDIOS</p>
         <h1>Student Gallery</h1>
         <p className="subtitle">
-          Explore designs created for the Spark Studios light board.
+          Explore designs created for the Spark Studios pixel wall.
         </p>
       </header>
 

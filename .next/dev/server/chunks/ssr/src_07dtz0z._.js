@@ -19,6 +19,8 @@ function AdminPage() {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const [designs, setDesigns] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+    const pendingDesigns = designs.filter((design)=>design.status === "pending");
+    const pastDesigns = designs.filter((design)=>design.status === "approved" || design.status === "rejected");
     // Load pending designs
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const loadDesigns = async ()=>{
@@ -29,7 +31,7 @@ function AdminPage() {
                 router.replace("/admin/login");
                 return;
             }
-            const { data, error } = await supabase.from("designs").select("*").eq("status", "pending").order("created_at", {
+            const { data, error } = await supabase.from("designs").select("*").order("created_at", {
                 ascending: false
             });
             if (error) {
@@ -83,6 +85,17 @@ function AdminPage() {
           </div>
         `;
             })).join("");
+        const deleteDesign = async (id)=>{
+            const confirmed = window.confirm("Are you sure you want to permanently delete this design?");
+            if (!confirmed) return;
+            const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$utils$2f$supabase$2f$client$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createClient"])();
+            const { error } = await supabase.from("designs").delete().eq("id", id);
+            if (error) {
+                console.error("Error deleting design:", error);
+                return;
+            }
+            setDesigns((currentDesigns)=>currentDesigns.filter((design)=>design.id !== id));
+        };
         printWindow.document.write(`
     <!DOCTYPE html>
     <html>
@@ -190,12 +203,12 @@ function AdminPage() {
                 children: "Loading submissions..."
             }, void 0, false, {
                 fileName: "[project]/src/app/admin/page.tsx",
-                lineNumber: 236,
+                lineNumber: 269,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/admin/page.tsx",
-            lineNumber: 235,
+            lineNumber: 268,
             columnNumber: 7
         }, this);
     }
@@ -209,14 +222,14 @@ function AdminPage() {
                         children: "SPARK STUDIOS"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 244,
+                        lineNumber: 277,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                         children: "Design Approvals"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 246,
+                        lineNumber: 279,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -224,7 +237,7 @@ function AdminPage() {
                         children: "Review student designs before they appear in the gallery."
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 248,
+                        lineNumber: 281,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -234,13 +247,13 @@ function AdminPage() {
                         children: "Log Out"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 252,
+                        lineNumber: 285,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/page.tsx",
-                lineNumber: 243,
+                lineNumber: 276,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -250,14 +263,14 @@ function AdminPage() {
                         children: "Pending Designs"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 262,
+                        lineNumber: 295,
                         columnNumber: 9
                     }, this),
                     designs.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         children: "No designs are waiting for approval."
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/page.tsx",
-                        lineNumber: 265,
+                        lineNumber: 298,
                         columnNumber: 11
                     }, this) : designs.map((design)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "approval-card",
@@ -268,7 +281,7 @@ function AdminPage() {
                                             children: design.design_name
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 270,
+                                            lineNumber: 303,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -278,13 +291,13 @@ function AdminPage() {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 271,
+                                            lineNumber: 304,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/page.tsx",
-                                    lineNumber: 269,
+                                    lineNumber: 302,
                                     columnNumber: 15
                                 }, this),
                                 design.grid_data?.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -293,12 +306,12 @@ function AdminPage() {
                                                 className: `preview-pixel pixel-${pixel}`
                                             }, `${rowIndex}-${columnIndex}`, false, {
                                                 fileName: "[project]/src/app/admin/page.tsx",
-                                                lineNumber: 279,
+                                                lineNumber: 312,
                                                 columnNumber: 25
                                             }, this)))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/page.tsx",
-                                    lineNumber: 275,
+                                    lineNumber: 308,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -311,7 +324,7 @@ function AdminPage() {
                                             children: "Approve"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 289,
+                                            lineNumber: 322,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -321,7 +334,7 @@ function AdminPage() {
                                             children: "Reject"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 302,
+                                            lineNumber: 335,
                                             columnNumber: 17
                                         }, this),
                                         design.grid_data?.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -331,31 +344,31 @@ function AdminPage() {
                                             children: "Print Design"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/page.tsx",
-                                            lineNumber: 316,
+                                            lineNumber: 349,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/page.tsx",
-                                    lineNumber: 288,
+                                    lineNumber: 321,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, design.id, true, {
                             fileName: "[project]/src/app/admin/page.tsx",
-                            lineNumber: 268,
+                            lineNumber: 301,
                             columnNumber: 13
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/page.tsx",
-                lineNumber: 261,
+                lineNumber: 294,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/page.tsx",
-        lineNumber: 242,
+        lineNumber: 275,
         columnNumber: 5
     }, this);
 }

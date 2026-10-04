@@ -20,6 +20,16 @@ export default function AdminPage() {
   const [designs, setDesigns] = useState<Design[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const pendingDesigns = designs.filter(
+  (design) => design.status === "pending"
+);
+
+const pastDesigns = designs.filter(
+  (design) =>
+    design.status === "approved" ||
+    design.status === "rejected"
+);
+
   // Load pending designs
   useEffect(() => {
     const loadDesigns = async () => {
@@ -39,7 +49,6 @@ export default function AdminPage() {
       const { data, error } = await supabase
         .from("designs")
         .select("*")
-        .eq("status", "pending")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -123,6 +132,30 @@ const pixels = design.grid_data
       })
     )
     .join("");
+
+    const deleteDesign = async (id: number) => {
+  const confirmed = window.confirm(
+    "Are you sure you want to permanently delete this design?"
+  );
+
+  if (!confirmed) return;
+
+  const supabase = createClient();
+
+  const { error } = await supabase
+    .from("designs")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error deleting design:", error);
+    return;
+  }
+
+  setDesigns((currentDesigns) =>
+    currentDesigns.filter((design) => design.id !== id)
+  );
+};
 
   printWindow.document.write(`
     <!DOCTYPE html>
