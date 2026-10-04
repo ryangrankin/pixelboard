@@ -38,13 +38,6 @@ export default function GalleryPage() {
 
   return (
     <main>
-      <header className="hero">
-        <p className="eyebrow">SPARK STUDIOS</p>
-        <h1>Student Gallery</h1>
-        <p className="subtitle">
-          Explore designs created for the Spark Studios pixel wall.
-        </p>
-      </header>
 
      <nav className="site-nav">
   <a
@@ -69,6 +62,14 @@ export default function GalleryPage() {
       Gallery
     </a>
   </div>
+
+  <header className="hero">
+        <p className="eyebrow">SPARK STUDIOS</p>
+        <h1>Student Gallery</h1>
+        <p className="subtitle">
+          Explore designs created for the Spark Studios pixel wall.
+        </p>
+      </header>
 </nav>
 
       <section className="designer">
