@@ -114,11 +114,11 @@ export default function Home() {
       <header className="hero">
         <p className="eyebrow">SPARK STUDIOS</p>
 
-        <h1>Light Up Your Idea.</h1>
+        <h1>Deisgn for Spark's Pixel Wall.</h1>
 
         <p className="subtitle">
           Pick a color and create your design for the
-          Spark Studios light board.
+          Spark Studios pixel wall.
         </p>
       </header>
 
