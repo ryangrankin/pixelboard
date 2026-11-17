@@ -276,6 +276,25 @@ export default function AdminPage() {
 
         <h1>Design Admin</h1>
 
+
+<section className="designer">
+  <h2>Real-Life Pixelboard Photos</h2>
+
+  <p>
+    Upload photos of the physical Pixelboard and
+    connect them to student designs.
+  </p>
+
+  <button
+    type="button"
+    className="send-button"
+    onClick={() => router.push("/admin/photos")}
+  >
+    Manage Photos →
+  </button>
+</section>
+
+
         <p className="subtitle">
           Review, print, and manage student designs.
         </p>
